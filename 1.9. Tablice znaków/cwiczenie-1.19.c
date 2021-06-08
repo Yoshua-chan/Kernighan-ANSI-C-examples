@@ -1,3 +1,5 @@
+/* Program odwraca każdą linijkę tekstu pobranego z stdin */
+
 #include <stdio.h>
 
 #define MAXLINE 1000

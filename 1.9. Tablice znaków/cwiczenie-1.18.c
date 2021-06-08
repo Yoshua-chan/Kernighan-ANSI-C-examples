@@ -10,20 +10,6 @@ void copy(char to[], char from[]);
 int getLastNonWhite(char string[]);
 void cutString(char string[], int index);
 
-/*
-int main() {
-  int len; // długość bieżącego wiersza
-  int max; // największa znana wartość 
-  char line[MAXLINE]; // bieżacy wiersz wejścia
-
-  while( (len = getln(line, MAXLINE)) > 0) {
-    if(len > 80) {
-      printf("%4d|%s", len-1, line);
-    }
-  }
-  return 0;
-} */
-
 int main() {         
   char line[MAXLINE];
   int len;

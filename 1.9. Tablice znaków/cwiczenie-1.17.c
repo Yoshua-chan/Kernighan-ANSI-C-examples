@@ -1,3 +1,5 @@
+/* Program wypisuje długość i zawartość wszystkich wierszy dłuższych niż 80 znaków */
+
 #include <stdio.h>
 
 #define MAXLINE 1000
@@ -7,7 +9,6 @@ void copy(char to[], char from[]);
 
 int main() {
   int len; /* długość bieżącego wiersza */
-  int max; /* największa znana wartość */
   char line[MAXLINE]; /* bieżacy wiersz wejścia */
 
   while( (len = getln(line, MAXLINE)) > 0) {

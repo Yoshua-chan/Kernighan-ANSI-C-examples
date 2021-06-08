@@ -1,3 +1,6 @@
+/* Program wyświetla długość każdego wiersza przekazywanego przez stdin */
+/* Napisany na bazie przyklad-1.c */
+
 #include <stdio.h>
 
 #define MAXLINE 1000
@@ -7,7 +10,6 @@ void copy(char to[], char from[]);
 
 int main() {
   int len; /* długość bieżącego wiersza */
-  int max; /* największa znana wartość */
   char line[MAXLINE]; /* bieżacy wiersz wejścia */
 
   while( (len = getln(line, MAXLINE)) > 0) {
