@@ -15,22 +15,29 @@ int getln(char* string, int max) {
   return i;
 }
 
-char* pinCommentBoundries(char* string, int* inComment, int* inQotes) {
-
-  /* funkcja zapisuje wartość NULL dla indeksu w którym zaczyna się komentarz w tablicy "string" */
-  /* jeśli funkcja zwraca 0, to znaczy, że w linijce podanej w argumencie nie znajduje się koniec komentarza */
-
-  int i;
-  int commentStartIndex = 0;
-  char* newStartPtr = 0;
-  
-  for(i = 0; string[i] != '\n'; i++) {
-    if(string[i] == '/' && string[i+1] == '*') {
-      string[i] = '\0';
+void transformLine(char* line, int length, bool* ptr_comment) {
+  for(int i = 0; i < length; i++) {
+    if(*ptr_comment == false && line[i] == '/')  {
+        if(line[i+1] == '*') {
+          *ptr_comment = true;
+        }
+        else if(line[i+1] == '/') {
+          for(; i < length && line[i] != '\n'; i++)
+            line[i] = '\0';
+          return;
+        }
+    } else if(*ptr_comment == true && line[i] == '*' && line[i+1] == '/') {
+        *ptr_comment = false;
+        line[i] = '\0';
+        line[i+1] = '\0';
     }
-    if(string[i] == '/' && string[i-1] == '*') {
-      newStartPtr = string + i + 1;
-    }
+    if(*ptr_comment == true)
+        line[i] = '\0';
   }
-  return newStartPtr;
+}
+
+void println(char* line, int length) {
+  for(int i = 0; i < length; i++) {
+    putchar(line[i]);
+  }
 }

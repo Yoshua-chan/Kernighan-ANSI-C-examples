@@ -1,11 +1,15 @@
-comment: functions.o main.o
-	gcc functions.o main.o -o comment
+CC=gcc
+comment.out: functions.o main.o
+	$(CC) functions.o main.o -o comment.out
 
 functions.o: functions.c
-	gcc -c functions.c
+	$(CC) -c functions.c
 
 main: main.c
-	gcc -c main.o
+	$(CC) -c main.o
+	
+debug: functions.o main.o
+	$(CC) -g functions.o main.o -o debug.out
 
 clean:
-	rm *.o comment
+	rm *.o *.out
