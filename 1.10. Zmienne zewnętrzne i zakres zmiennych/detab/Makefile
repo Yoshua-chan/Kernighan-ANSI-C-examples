@@ -1,4 +1,5 @@
 CC=gcc
+
 detab.out: functions.o main.o
 	$(CC) functions.o main.o -o detab.out
 

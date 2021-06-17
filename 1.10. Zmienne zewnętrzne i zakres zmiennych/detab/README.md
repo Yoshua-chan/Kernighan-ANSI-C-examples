@@ -1,4 +1,3 @@
 # detab
 
-detab to program z ćwiczenia na końcu rozdziału pierwszego "Język C".
-detab zastępuje tabulatory w tekście z wejścia standardowego na stałą liczbę tabulatorów.
+Napisz program `detab`, który zastępuje tabulatory w danych wejściowych odpowiednią liczbą spacji, zapewniającą zachowanie odstępu do następnej pozycji tabulacji. Przyjmij stałą liczbę pozycji tabulacji, na przykład co `n` kolumn. Czy `n` powinno być zmienną czy parametrem symbolicznym?

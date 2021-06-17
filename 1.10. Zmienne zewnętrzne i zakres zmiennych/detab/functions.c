@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "functions.h"
 
@@ -14,37 +15,13 @@ int getln(char* string, int max) {
   string[i] = '\0';
   return i;
 }
-char* pinComment(char* string) {
-  int i;
 
-  for(i = 0; string[i] != '\n' && string[i] != '\0'; i++){
-    if(string[i] == '/' && string[i+1] == '*') {
-      string[i] = '\0';
-    }
-    /*if(string[i] == '/' && string[i-1] == '*') {
-      
-    }*/
+void detab(char* line, int length, int tabWidth) {
+  for(int i = 0; i < length; i++) {
+    if(line[i] == '\t')
+      for(int k = 0; k < tabWidth; k++)
+        putchar(' ');
+    else
+      putchar(line[i]);
   }
-  return NULL;
 }
-
-char* pinCommentBoundries(char* string, int* inComment, int* inQotes) {
-
-  // funkcja zapisuje wartość NULL dla indeksu w którym zaczyna się komentarz w tablicy "string"
-  // jeśli funkcja zwraca 0, to znaczy, że w linijce podanej w argumencie nie znajduje się koniec komentarza 
-
-  int i;
-  int commentStartIndex = 0;
-  char* newStartPtr = 0;
-  
-  for(i = 0; string[i] != '\n'; i++) {
-    if(string[i] == '/' && string[i+1] == '*') {
-      string[i] = '\0';
-    }
-    if(string[i] == '/' && string[i-1] == '*') {
-      newStartPtr = string + i + 1;
-    }
-  }
-  return newStartPtr;
-} 
-

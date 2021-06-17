@@ -2,8 +2,6 @@
 #include <stdbool.h>
 
 int getln(char* string, int max);
-char* pinComment(char* string);
 
-char* pinCommentBoundries(char* string, int* inComment, int* inQotes);
-
+void detab(char* line, int length, int tabWidth);
 
