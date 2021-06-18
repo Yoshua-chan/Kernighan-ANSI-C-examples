@@ -14,16 +14,26 @@ int getln(char* string, int max) {
   string[i] = '\0';
   return i;
 }
-char* pinComment(char* string) {
-  int i;
 
-  for(i = 0; string[i] != '\n' && string[i] != '\0'; i++){
-    if(string[i] == '/' && string[i+1] == '*') {
-      string[i] = '\0';
+void entab(char* string, int length , int tabWidth) {
+
+  int spaces = 0;
+
+  for(int i = 0; i < length; i++) {
+    if(string[i] == ' ') {
+      spaces++;
     }
-    /*if(string[i] == '/' && string[i-1] == '*') {
-      
-    }*/
+    else {
+      for(int k = 0; k < spaces; k++) {
+        putchar(' ');
+      }
+      spaces = 0;
+      putchar(string[i]);
+    }
+
+    if(spaces == tabWidth){
+      putchar('\t');
+      spaces = 0;
+    }
   }
-  return NULL;
 }

@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "functions.h"
 
-int getln(char* string, int max) {
+int getln(char* string, int max) { //zapisuje wiersz do znaka \n z wejścia standardowego do podanej tablicy
   int i, c;
   for(i = 0; (c = getchar()) != EOF && i < max - 1 && c != '\n' ; i++) {
     string[i] = c;
@@ -14,37 +14,36 @@ int getln(char* string, int max) {
   string[i] = '\0';
   return i;
 }
-char* pinComment(char* string) {
-  int i;
 
-  for(i = 0; string[i] != '\n' && string[i] != '\0'; i++){
-    if(string[i] == '/' && string[i+1] == '*') {
-      string[i] = '\0';
+void transformLine(char* line, int length, bool* ptr_comment) { //funkcja zastępuje każdy znak w komentarzach NULLem
+  for(int i = 0; i < length; i++) {
+
+    if(*ptr_comment == false && line[i] == '/')  {
+
+        if(line[i+1] == '*') { //wykrywa początek komentarza blokowego
+          *ptr_comment = true;
+        }
+
+        else if(line[i+1] == '/') { //nadpisuje komendarze z dwoma slashami do końca linii z wyłączeniem \n, a następnie kończy funkcje
+          for(; i < length && line[i] != '\n'; i++)
+            line[i] = '\0';
+          return;
+        }
+
+    } else if(*ptr_comment == true && line[i] == '*' && line[i+1] == '/') { //wykwywa koniec komentarza blokowego
+        *ptr_comment = false;
+        line[i] = '\0';
+        line[i+1] = '\0';
+
     }
-    /*if(string[i] == '/' && string[i-1] == '*') {
-      
-    }*/
+    if(*ptr_comment == true) //nadpisuje znak nullem, jeśli ten jest wewnątrz komentarza
+        line[i] = '\0';
   }
-  return NULL;
+
 }
 
-char* pinCommentBoundries(char* string, int* inComment, int* inQotes) {
-
-  // funkcja zapisuje wartość NULL dla indeksu w którym zaczyna się komentarz w tablicy "string"
-  // jeśli funkcja zwraca 0, to znaczy, że w linijce podanej w argumencie nie znajduje się koniec komentarza 
-
-  int i;
-  int commentStartIndex = 0;
-  char* newStartPtr = 0;
-  
-  for(i = 0; string[i] != '\n'; i++) {
-    if(string[i] == '/' && string[i+1] == '*') {
-      string[i] = '\0';
-    }
-    if(string[i] == '/' && string[i-1] == '*') {
-      newStartPtr = string + i + 1;
-    }
+void println(char* line, int length) { //printuje cały char o podanej długości, nie kończy się na nullu
+  for(int i = 0; i < length; i++) {
+    putchar(line[i]);
   }
-  return newStartPtr;
-} 
-
+}
