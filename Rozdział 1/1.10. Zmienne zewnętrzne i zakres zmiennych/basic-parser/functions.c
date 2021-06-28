@@ -34,8 +34,8 @@ void transformLine(char* line, int length, bool* ptr_comment) { //funkcja zastę
         *ptr_comment = false;
         line[i] = '\0';
         line[i+1] = '\0';
-
     }
+
     if(*ptr_comment == true) //nadpisuje znak nullem, jeśli ten jest wewnątrz komentarza
         line[i] = '\0';
   }
