@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 /* pobiera linię do stringa i zwraca jej długość */
 int getln(char line[], int lim) {
@@ -22,7 +23,7 @@ int strleng(char* line) {
     return i;
 }
 
-int strrindex(char* line, char* pattern) {
+int original(char* line, char* pattern) {
     int i, j, k;
 
     for(i = 0; line[i] != '\0'; i++) {
@@ -34,10 +35,47 @@ int strrindex(char* line, char* pattern) {
     return -1;
 }
 
-int main() {
+int strindex(char* line, char* pattern) {
+    int i, j, k;
+    int pattLen = strlen(pattern);
+    int lineLen = strlen(line);
 
-    char guma[50] = "guma";
-    printf("%d", strleng(guma));
-    return 0;
+    //for(i = 0; line[i] != '\0'; i++) {
+    for(i = 0; i != lineLen; i++) {
+        //for(j = i, k = 0; pattern[k] != '\0' && line[j] == pattern[k]; j++, k++)
+        for(j = i, k = 0; k != pattLen && line[j] == pattern[k]; j++, k++)
+            ;   
+        if(k > 0 && k == pattLen)
+            return i;
+    }
+    return -1;
 }
 
+int strrindex(char* line, char* pattern) {
+    int i, j, k;
+    int pattLen = strlen(pattern);
+    int lineLen = strlen(line);
+
+    for(i = lineLen - 1; i >= 0; i--) {
+        for(j = i, k = 0; k != pattLen && line[j] == pattern[k]; j++, k++)
+            ;   
+        if(k > 0 && k == pattLen)
+            return i;
+    }
+    return -1;
+}
+
+int main() {
+    int found = 0;
+    int index;
+    char line[500];
+    char pattern[500] = "ar";
+    while(getln(line, 500)) {
+        if((index = strrindex(line, pattern)) >= 0) {
+            printf("%d\t%s", index, line);
+            found++;
+        }
+        
+    }
+    return found;
+}
