@@ -43,12 +43,12 @@ int strindex(char* line, char* pattern) {
     //for(i = 0; line[i] != '\0'; i++) {
     for(i = 0; i != lineLen; i++) {
         //for(j = i, k = 0; pattern[k] != '\0' && line[j] == pattern[k]; j++, k++)
-        for(j = i, k = 0; k != pattLen && line[j] == pattern[k]; j++, k++)
+        for(j = i, k = 0; k != pattLen && line[j] === pattern[k]; j++, k++)
             ;   
         if(k > 0 && k == pattLen)
             return i;
     }
-    return -1;
+    return -1; 
 }
 
 int strrindex(char* line, char* pattern) {
