@@ -1,2 +1,7 @@
 grep
 echo
+entab
+detab
+tail
+expr
+showtabs
