@@ -24,8 +24,8 @@ void detab(char* line, int length, int tabWidth) {
     if(line[i] == '\t')
       for(int k = 0; k < tabWidth; k++)
         putchar(' ');
-    else
-      putchar(line[i]);
+      else
+        putchar(line[i]);
   }
 }
 

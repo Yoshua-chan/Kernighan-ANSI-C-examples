@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
     }
 
     lines = malloc(nlines * sizeof(char*));
-
+    
     int len;
 
     while((len = getln(line, MAXLINE)) > 0) {
