@@ -1,6 +1,7 @@
 **/*.out
 **/*.o
 **/.vscode
+**/*.mp4
 
 # Prerequisites
 *.d

@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #define MAXLINES 50000
 
 
 char *lineptr[MAXLINES];
 int  readlines (char* lineptr[], int nlines);
-void writelines(char* lineptr[], int nlines);
+void writelines(char* lineptr[], int nlines, int reversed);
 //void qsortstr(char* v[], int left, int right);
 void qsortstr(void* v[], int left, int right, int (*comp)(void*, void*));
 int getln(char line[], int lim);
@@ -48,9 +49,16 @@ int readlines(char* lineptr[], int maxlines) {
 }
 
 /* writeline: wypisuje wiersze wyjściowe */
-void writelines(char* lineptr[], int nlines) {
+void writelines(char* lineptr[], int nlines, int reversed) {
     int i;
 
+    if(reversed){
+        for(i = nlines - 1; i >= 0 ; i--)
+            printf("%s\n", lineptr[i]);
+    return;
+    }
+
+    
     for(i = 0; i < nlines; i++)
         printf("%s\n", lineptr[i]);
 }
@@ -66,7 +74,7 @@ void qsortstr(void* v[], int left, int right, int (*comp)(void*, void*)) {
     last = left;
 
     for(i = left + 1; i <= right; i++)
-        if((*comp)(v[i], v[left]) < 0)
+        if( (*comp)(v[i], v[left]) < 0)
             swap(v, ++last, i);
 
     swap(v, left, last);
@@ -88,6 +96,14 @@ int numcmp(char* s1, char* s2) {
         return 0;
 }
 
+int strcmp_ignore_case(char* s1, char* s2) {
+    int i;
+    for(i = 0; (tolower(s1[i]) == tolower(s2[i])); i++)
+        if(s1[i] == '\0')
+            return 0;
+    return (tolower(s1[i]) - tolower(s2[i]));
+}
+
 void swap(void *v[], int i, int j) {
     void* temp;
     temp = v[i];
@@ -97,16 +113,47 @@ void swap(void *v[], int i, int j) {
 
 int main(int argc, char** argv) {
     int nlines; /*liczba odczytanych wierszy*/
-    int numeric = 0;
-    
-    if(argc > 1 && !strcmp(argv[1], "-n"))
-        numeric = 1;
+    int numeric    = 0;
+    int reversed   = 0;
+    int ignoreCase = 0;
+    int directory  = 0;
+    char c;
+
+    if(argc > 1 && argv[1][0] == '-') {
+        for(int i = 0; (c = argv[1][i]) != '\0'; i++) {
+            switch(c) {
+                case 'n':
+                    numeric    = 1;
+                break;
+                case 'r':
+                    reversed   = 1;
+                break;
+                case 'f':
+                    ignoreCase = 1;
+                break;
+                case 'd':
+                    directory  = 1;
+                break;
+            }
+        }
+    }
     if((nlines = readlines(lineptr, MAXLINES)) >= 0) {
-        qsortstr((void**) lineptr, 0, nlines-1, (int (*)(void*, void*))(numeric ? numcmp : strcmp));
-        writelines(lineptr, nlines);
+        int (*function)(void*, void*);
+
+        if(ignoreCase) {
+            function = (int (*)(void*, void*)) strcmp_ignore_case;
+        } else if(numeric) {
+            function = (int (*)(void*, void*)) numcmp;
+        } else {
+            function = (int (*)(void*, void*)) strcmp;
+        }
+
+        qsortstr((void**) lineptr, 0, nlines-1, function);
+        writelines(lineptr, nlines, reversed);
         return 0;
     } else {
         printf("error: input too big to sort\n");
         return 1;
     }
+
 }
