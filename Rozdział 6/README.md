@@ -90,7 +90,7 @@ Tablice struktur, podobnie jak same struktury można zainicjalizować zaraz po i
 struct key {
     char* keyword;
     int count;
-} keytab[] {
+} keytab[] = {
     "auto", 0,
     "break", 0,
     "case", 0,
